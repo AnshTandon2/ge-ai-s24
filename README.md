@@ -1,2 +1,2 @@
-# ge-ai-intro_to_rob
+# ge-ai-s24
 GE Research team working hard
