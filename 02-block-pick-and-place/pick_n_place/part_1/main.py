@@ -93,7 +93,22 @@ def main(sim_path, horizon):
             sim.forward()
             # ---------------- 1.1 REPLACE WITH YOUR OWN TARGETS----------------
 
-            # update later for further roboti manipulation of arm
+            # new targets or ik and way points
+            ik_result_new = qpos_from_site_pose(
+                physics=sim,
+                site_name="end_effector",
+                target_pos=box_pos,
+                target_quat=box_quat,
+                inplace=False,
+                regularization_strength=1.0,
+            )
+
+            waypoints_new = generate_joint_space_min_jerk(
+                start=ik_result.qpos[:ARM_nJnt],
+                goal=ik_result_new.qpos[:ARM_nJnt],
+                time_to_go=horizon,
+                dt=sim.model.opt.timestep,
+            )
 
             # --------------- 1.2 GENERATE FULL JOINT TRAJECTORY FOR TASK----------------
             # IK
@@ -119,6 +134,9 @@ def main(sim_path, horizon):
                 time_to_go=horizon,
                 dt=sim.model.opt.timestep,
             )
+
+
+        
             # --------------- 1.2 GENERATE FULL JOINT TRAJECTORY FOR TASK----------------
         # propagate waypoint in sim
         waypoint_ind = int(sim.data.time / sim.model.opt.timestep)
