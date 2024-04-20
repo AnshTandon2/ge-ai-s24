@@ -98,7 +98,7 @@ def main(sim_path, horizon):
                 physics=sim,
                 site_name="end_effector",
                 target_pos=box_pos,
-                target_quat=box_quat,
+                target_quat=box_mat,
                 inplace=False,
                 regularization_strength=1.0,
             )
