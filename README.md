@@ -1,5 +1,11 @@
 # Project 2
 
+## Technologies Used
+Open AI Gymnasium
+MuJoCo
+Gazebo3D
+RoboHive
+
 ## Supported Platforms
 - Ubuntu
 - Windows
