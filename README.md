@@ -1,10 +1,11 @@
-# Project 2
+# GE Research GE:AI - Project
 
 ## Technologies Used
-Open AI Gymnasium
-MuJoCo
-Gazebo3D
-RoboHive
+- Open AI Gymnasium
+- MuJoCo 
+- Gazebo3D
+- RoboHive
+
 
 ## Supported Platforms
 - Ubuntu
