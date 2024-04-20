@@ -1,6 +1,6 @@
 # """ =================================================
 # Copyright (C) 2018 Vikash Kumar
-# Adapted by Raghava Uppuluri for GE-AI Course
+# Adapated for GE-Research x GE:AI Research Project: By Ansh, Dom, Gabe, Moe, Adi, Sam
 # Author  :: Vikash Kumar (vikashplus@gmail.com)
 # Source  :: https://github.com/vikashplus/robohive
 # License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -73,6 +73,17 @@ def main(sim_path, horizon):
             box_pos = sim.data.xpos[box_sid]  # cartesian position
             box_mat = sim.data.xmat[box_sid]  # rotation matrix
 
+
+            #NEW Code updates for adding new positionings for the target and identification number of hand
+            
+            target_pos = sim.data.xpos[target_sid]
+            target_mat = sim.data.xmat[target_sid]
+
+            eef_pos = sim.data.xpos[eef_sid]  # identification number of hand (sim data returns x y z) gets the starting position
+            eef_mat = sim.data.xmat[eef_sid] # identification number of hand to get the returns the rotation matrix to figure out 
+            
+            eef_mat = np.reshape(eef_mat, (-1, 3)) # converts to even ordering
+            
             # propagage targets to the sim for viz (ONLY FOR VISUALIZATION)
             sim.model.site_pos[target_sid][:] = target_pos - np.array([0, 0, BIN_TOP])
             sim.model.site_quat[target_sid][:] = target_quat
@@ -81,6 +92,8 @@ def main(sim_path, horizon):
             sim.data.qpos[:ARM_nJnt] = ARM_JNT0
             sim.forward()
             # ---------------- 1.1 REPLACE WITH YOUR OWN TARGETS----------------
+
+            # update later for further roboti manipulation of arm
 
             # --------------- 1.2 GENERATE FULL JOINT TRAJECTORY FOR TASK----------------
             # IK
@@ -107,7 +120,6 @@ def main(sim_path, horizon):
                 dt=sim.model.opt.timestep,
             )
             # --------------- 1.2 GENERATE FULL JOINT TRAJECTORY FOR TASK----------------
-
         # propagate waypoint in sim
         waypoint_ind = int(sim.data.time / sim.model.opt.timestep)
         sim.data.ctrl[:ARM_nJnt] = waypoints[waypoint_ind]["position"]
